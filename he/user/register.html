@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>Physio Cube – הרשמה</title>
+    <link rel="icon" href="https://i.ibb.co/kgKXMwgq/round.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root{ --accent:#0794ae; --white:#ffffff; --bg-body:#f4f6f8; --text:#333; --text-light:#666; --border:#e0e0e0; }
+        *{ margin:0; padding:0; box-sizing:border-box; }
+        body{ background:var(--bg-body); font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; min-height:100vh; display:flex; justify-content:center; align-items:center; color:var(--text); }
+        .card{ width:100%; max-width:380px; background:var(--white); border:1px solid var(--border); border-radius:12px; padding:2rem 1.5rem; box-shadow:0 10px 25px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+        
+        /* Логотип */
+        .project-logo{ max-width:100px; margin:0 auto 1rem; display: block; border-radius: 50%; /* Опционально: делает лого круглым, если нужно */ }
+        
+        h2{ margin-bottom:1.5rem; color:var(--accent); font-size:1.8rem; text-align: center; font-weight: 700; }
+        .input-group{ margin-bottom:1rem; text-align:left; }
+        .input-group label{ display:block; margin-bottom:0.3rem; font-size:0.9rem; color:var(--text-light); font-weight: 500; }
+        .input-group input, .input-group select{ width:100%; padding:0.7rem; font-size:1rem; border:1px solid #ccc; border-radius:8px; background: #fafafa; transition:border-color .2s; }
+        .input-group input:focus, .input-group select:focus{ outline:none; border-color:var(--accent); background: #fff; }
+        .btn{ display:block; width:100%; padding:0.9rem; font-size:1.1rem; font-weight:bold; border-radius:8px; cursor:pointer; text-align: center; border: none; margin-top: 1rem; transition:all .2s; }
+        .btn-primary{ color:var(--white); background:var(--accent); }
+        .btn-primary:hover{ background:#056e93; }
+        .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+        .extra-links{ margin-top:1.5rem; display:flex; flex-direction:column; gap:0.8rem; text-align: center; }
+        .btn-secondary{ background:transparent; color:var(--accent); border:1px solid var(--accent); text-decoration: none; padding: 0.7rem; display: block; border-radius: 8px;}
+        .btn-secondary:hover{ background:#f0f8fb; }
+        @media (max-width:480px){ body { background: var(--white); } .card{ border:none; box-shadow:none; padding: 2rem 1rem; min-height: 100vh; justify-content: start; } }
+    </style>
+</head>
+<body>
+
+    <section class="card">
+        <img src="https://i.pinimg.com/736x/b1/21/13/b12113174c4e7e5af8f77a203e67663d.jpg" alt="לוגו Physio Cube" class="project-logo">
+
+        <h2>צור חשבון</h2>
+
+        <form id="registerForm">
+            <div class="input-group">
+                <label for="email">דוא"ל</label>
+                <input type="email" id="email" required autocomplete="email" placeholder="you@example.com">
+            </div>
+
+            <div class="input-group">
+                <label for="password">סיסמה</label>
+                <input type="password" id="password" required autocomplete="new-password" placeholder="•••••••• (לפחות 6 תווים)">
+            </div>
+
+            <div class="input-group">
+                <label for="firstName">שם פרטי</label>
+                <input type="text" id="firstName" required autocomplete="given-name" placeholder="יוסי">
+            </div>
+
+            <div class="input-group">
+                <label for="lastName">שם משפחה</label>
+                <input type="text" id="lastName" required autocomplete="family-name" placeholder="כהן">
+            </div>
+
+            <div class="input-group">
+                <label for="userId">תעודת זהות</label>
+                <input type="number" id="userId" required placeholder="לדוגמה: 12345678">
+            </div>
+
+            <div class="input-group">
+                <label for="gender">מגדר</label>
+                <select id="gender" required>
+                    <option value="">בחר מגדר</option>
+                    <option value="Male">זכר</option>
+                    <option value="Female">נקבה</option>
+                    <option value="Other">אחר</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="sport">ספורט</label>
+                <input type="text" id="sport" placeholder="לדוגמה: שחייה">
+            </div>
+
+            <div class="input-group">
+                <label for="medicalCard">כרטיס רפואי</label>
+                <input type="text" id="medicalCard" placeholder="מספר כרטיס">
+            </div>
+
+            <div class="input-group">
+                <label for="hospital">בית חולים</label>
+                <select id="hospital" required>
+                    <option value="">בחר בית חולים</option>
+                    <option value="Clalit">כללית</option>
+                    <option value="Macabi">מקבי</option>
+                    <option value="Meuhedet">מאוחדת</option>
+                    <option value="Leumit">לאומית</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="submitBtn">הירשם</button>
+        </form>
+
+        <div class="extra-links">
+            <a href="login.html" class="btn btn-secondary">כבר יש לך חשבון? התחבר</a>
+            <a href="../index.html" style="color: #999; font-size: 0.9rem; text-decoration: none;">חזרה לדף הבית</a>
+        </div>
+    </section>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8DZm6yDyGHD9rWo-bIhsipsKeMXCTcBk",
+            authDomain: "physio-cube.firebaseapp.com",
+            projectId: "physio-cube",
+            storageBucket: "physio-cube.firebasestorage.app",
+            messagingSenderId: "593288932552",
+            appId: "1:593288932552:web:3b4783b6c16fef9eae09fd",
+            measurementId: "G-F5W17MVEZD"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const registerForm = document.getElementById('registerForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'יוצר חשבון...';
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Данные профиля (БЕЗ пароля - для безопасности)
+            const profileData = {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                personalId: document.getElementById('userId').value.trim(),
+                gender: document.getElementById('gender').value,
+                sport: document.getElementById('sport').value.trim() || "None",
+                medicalCard: document.getElementById('medicalCard').value.trim() || "None",
+                hospital: document.getElementById('hospital').value,
+                email: email, 
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                // 1. Создаем пользователя в Auth
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // 2. Создаем документ в Firestore с UID пользователя
+                await setDoc(doc(db, "users", user.uid), profileData);
+
+                alert("ההרשמה בוצעה בהצלחה! מעביר לכניסה...");
+                window.location.href = "login.html";
+
+            } catch (error) {
+                console.error("Register Error:", error);
+                let message = "ההרשמה נכשלה: " + error.message;
+                
+                if (error.code === 'auth/email-already-in-use') message = "דוא\"ל זה כבר רשום.";
+                if (error.code === 'auth/weak-password') message = "הסיסמה חייבת להכיל לפחות 6 תווים.";
+                if (error.code === 'permission-denied') message = "כתיבת מידע למסד הנתונים נדחתה. בדוק את חוקי Firebase.";
+
+                alert(message);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'הירשם';
+            }
+        });
+    </script>
+</body>
+</html>

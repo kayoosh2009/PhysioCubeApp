@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Physio Cube – ملفي الشخصي</title>
+    <link rel="icon" href="https://i.ibb.co/kgKXMwgq/round.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <style>
+        :root{
+            --accent: #0794ae;
+            --bg-body: #f0f2f5;
+            --bg-app: #ffffff;
+            --text-main: #333;
+            --text-light: #777;
+            --border: #e0e0e0;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-body);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text-main);
+        }
+
+        /* --- Mobile Wrapper --- */
+        .mobile-viewport {
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            max-height: 900px;
+            background: var(--bg-app);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        @media (max-width: 480px) {
+            body { background: var(--bg-app); }
+            .mobile-viewport { max-width: 100%; max-height: 100%; box-shadow: none; }
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 15px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 15px;
+            background: none;
+            border: none;
+            color: var(--accent);
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* --- Content --- */
+        .content-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: none; /* Hidden until loaded */
+            padding-bottom: 80px; /* Space for button */
+        }
+
+        /* --- Profile Header --- */
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .avatar-circle {
+            width: 80px;
+            height: 80px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 10px rgba(7, 148, 174, 0.3);
+        }
+
+        .profile-email {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* --- Form Rows --- */
+        .form-row {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 5px;
+        }
+
+        .form-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        /* Стиль инпутов: когда disabled - выглядят как текст */
+        .form-input {
+            width: 100%;
+            font-size: 1rem;
+            color: var(--text-main);
+            border: 1px solid transparent; /* Нет границ */
+            background: transparent;
+            padding: 5px 0;
+            font-family: inherit;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+            opacity: 1; 
+            -webkit-text-fill-color: var(--text-main);
+        }
+
+        /* Режим редактирования */
+        .form-input:not(:disabled) {
+            background: #fff;
+            border: 1px solid var(--accent);
+            padding: 5px 10px;
+            box-shadow: 0 0 0 3px rgba(7, 148, 174, 0.1);
+        }
+        
+        .form-input:disabled {
+            cursor: default;
+        }
+
+        /* Select styling fix */
+        select.form-input {
+            appearance: none; /* remove default arrow when disabled looks cleaner */
+        }
+        select.form-input:not(:disabled) {
+            appearance: menulist;
+        }
+
+        /* --- Action Button --- */
+        .action-area {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, #fff 80%, rgba(255,255,255,0));
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-edit {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(7, 148, 174, 0.3);
+            transition: transform 0.2s, background 0.2s;
+        }
+        
+        .btn-edit.save-mode {
+            background: #27ae60; /* Green for save */
+            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn-edit:active {
+            transform: scale(0.98);
+        }
+
+        /* Loader */
+        #loader {
+            position: absolute; inset: 0; background: white; z-index: 50;
+            display: flex; justify-content: center; align-items: center;
+            flex-direction: column; gap: 10px; color: var(--accent);
+        }
+        .spinner {
+            width: 30px; height: 30px; border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--accent); border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="mobile-viewport">
+        
+        <header class="navbar">
+            <button class="back-btn" onclick="window.location.href='../dash.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <h1>ملفي الشخصي</h1>
+        </header>
+
+        <div id="loader">
+            <div class="spinner"></div>
+            <div>جارٍ تحميل الملف الشخصي...</div>
+        </div>
+
+        <main class="content-scroll" id="mainContent">
+            
+            <div class="profile-header">
+                <div class="avatar-circle" id="avatarInitials">--</div>
+                <div class="profile-email" id="emailDisplay">...</div>
+            </div>
+
+            <form id="profileForm">
+                
+                <div class="form-row">
+                    <label class="form-label">الاسم الأول</label>
+                    <input type="text" class="form-input" id="firstName" disabled>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">اسم العائلة</label>
+                    <input type="text" class="form-input" id="lastName" disabled>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">رقم الهوية</label>
+                    <input type="number" class="form-input" id="personalId" disabled>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">الجنس</label>
+                    <select class="form-input" id="gender" disabled>
+                        <option value="Male">ذكر</option>
+                        <option value="Female">أنثى</option>
+                        <option value="Other">آخر</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">الرياضة</label>
+                    <input type="text" class="form-input" id="sport" disabled>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">بطاقة طبية</label>
+                    <input type="text" class="form-input" id="medicalCard" disabled>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">المستشفى</label>
+                    <select class="form-input" id="hospital" disabled>
+                        <option value="Clalit">Clalit</option>
+                        <option value="Macabi">Macabi</option>
+                        <option value="Meuhedet">Meuhedet</option>
+                        <option value="Leumit">Leumit</option>
+                    </select>
+                </div>
+                
+                <div class="form-row" style="border-bottom:none;">
+                    <label class="form-label">عضو منذ</label>
+                    <div id="regDate" style="padding: 5px 0; color: #777;">-</div>
+                </div>
+
+            </form>
+        </main>
+
+        <div class="action-area">
+            <button class="btn-edit" id="editBtn">تحرير البيانات</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB8DZm6yDyGHD9rWo-bIhsipsKeMXCTcBk",
+            authDomain: "physio-cube.firebaseapp.com",
+            projectId: "physio-cube",
+            storageBucket: "physio-cube.firebasestorage.app",
+            messagingSenderId: "593288932552",
+            appId: "1:593288932552:web:3b4783b6c16fef9eae09fd",
+            measurementId: "G-F5W17MVEZD"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // UI Refs
+        const loader = document.getElementById('loader');
+        const mainContent = document.getElementById('mainContent');
+        const editBtn = document.getElementById('editBtn');
+        const inputs = document.querySelectorAll('.form-input');
+        
+        let currentUserUid = null;
+        let isEditing = false;
+
+        // 1️⃣ تحميل البيانات
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserUid = user.uid;
+                try {
+                    const docRef = doc(db, "users", user.uid);
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        renderData(docSnap.data(), user.email);
+                    } else {
+                        console.log("لم يتم العثور على ملف المستخدم");
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("فشل تحميل البيانات.");
+                } finally {
+                    loader.style.display = 'none';
+                    mainContent.style.display = 'block';
+                }
+            } else {
+                window.location.href = 'login.html';
+            }
+        });
+
+        // ملء النموذج بالبيانات
+        function renderData(data, email) {
+            document.getElementById('emailDisplay').textContent = email;
+
+            document.getElementById('firstName').value = data.firstName || "";
+            document.getElementById('lastName').value = data.lastName || "";
+            document.getElementById('personalId').value = data.personalId || "";
+            document.getElementById('gender').value = data.gender || "Male";
+            document.getElementById('sport').value = data.sport || "";
+            document.getElementById('medicalCard').value = data.medicalCard || "";
+            document.getElementById('hospital').value = data.hospital || "Clalit";
+
+            if (data.createdAt) {
+                const date = new Date(data.createdAt);
+                document.getElementById('regDate').textContent = date.toLocaleDateString();
+            }
+
+            updateAvatar(data.firstName, data.lastName);
+        }
+
+        function updateAvatar(fName, lName) {
+            const i1 = (fName || "").charAt(0).toUpperCase();
+            const i2 = (lName || "").charAt(0).toUpperCase();
+            document.getElementById('avatarInitials').textContent = i1 + i2;
+        }
+
+        // 2️⃣ منطق زر التحرير / الحفظ
+        editBtn.addEventListener('click', async () => {
+            if (!isEditing) {
+                // الدخول إلى وضع التحرير
+                isEditing = true;
+                inputs.forEach(input => input.disabled = false);
+                editBtn.textContent = "حفظ التغييرات";
+                editBtn.classList.add("save-mode");
+                document.getElementById('firstName').focus();
+            } else {
+                // حفظ التغييرات
+                editBtn.disabled = true;
+                editBtn.textContent = "جارٍ الحفظ...";
+
+                const newData = {
+                    firstName: document.getElementById('firstName').value.trim(),
+                    lastName: document.getElementById('lastName').value.trim(),
+                    personalId: document.getElementById('personalId').value.trim(),
+                    gender: document.getElementById('gender').value,
+                    sport: document.getElementById('sport').value.trim(),
+                    medicalCard: document.getElementById('medicalCard').value.trim(),
+                    hospital: document.getElementById('hospital').value
+                };
+
+                try {
+                    const userRef = doc(db, "users", currentUserUid);
+                    await updateDoc(userRef, newData);
+
+                    isEditing = false;
+                    inputs.forEach(input => input.disabled = true);
+                    editBtn.textContent = "تحرير البيانات";
+                    editBtn.classList.remove("save-mode");
+                    updateAvatar(newData.firstName, newData.lastName);
+                    alert("تم تحديث الملف بنجاح!");
+                } catch (error) {
+                    console.error("Error updating:", error);
+                    alert("خطأ في حفظ البيانات. يرجى المحاولة مرة أخرى.");
+                } finally {
+                    editBtn.disabled = false;
+                    if (isEditing) editBtn.textContent = "حفظ التغييرات";
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Physio Cube – Bem-vindo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        /* ==================== Цвета и сброс ==================== */
+        :root{
+            --accent:#0794ae;   /* фирменный синий */
+            --white:#ffffff;   /* фон */
+            --bg-body:#f4f6f8; /* фон страницы на ПК */
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background:var(--bg-body);
+            font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         "Helvetica Neue", Arial, sans-serif;
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            color:#333;
+        }
+
+        /* ==================== Карточка (Стиль как в Login) ==================== */
+        .card{
+            width:100%;
+            max-width:380px;      /* Ширина "телефона" */
+            background:var(--white);
+            border:1px solid #e0e0e0;
+            border-radius:12px;   
+            padding:2.5rem 1.5rem; /* Чуть больше отступа сверху/снизу для воздуха */
+            box-shadow:0 10px 25px rgba(0,0,0,0.05);
+            text-align:center;
+        }
+
+        /* Логотип */
+        .project-logo{
+            max-width:150px; 
+            width:100%;
+            height:auto;
+            margin:0 auto 1.5rem;
+            display: block;
+        }
+
+        /* Заголовок */
+        .card h1 {
+            margin-bottom:2rem; /* Отступ до кнопок */
+            color:var(--accent);
+            font-size:2rem;
+            font-weight: 700;
+        }
+
+        /* ==================== Кнопки ==================== */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn{
+            display:inline-block;
+            width:100%;
+            padding:0.9rem;
+            font-size:1.1rem;
+            font-weight:bold;
+            border-radius:8px;
+            cursor:pointer;
+            text-decoration:none;
+            transition:all .2s;
+            text-align: center;
+        }
+
+        /* Кнопка Register */
+        .btn-primary{
+            color:var(--white);
+            background:var(--accent);
+            border:1px solid var(--accent);
+            box-shadow: 0 4px 6px rgba(7, 148, 174, 0.2);
+        }
+        .btn-primary:hover{
+            background:#056e93;
+            transform: translateY(-1px);
+        }
+
+        /* Кнопка Login */
+        .btn-secondary{
+            background:var(--white);
+            color:var(--accent);
+            border:1px solid var(--accent);
+        }
+        .btn-secondary:hover{
+            background:#f0f8fb;
+        }
+
+        /* ==================== Адаптивность ==================== */
+        @media (max-width:480px){
+            body {
+                background: var(--white);
+            }
+            .card{
+                border:none;
+                box-shadow:none;
+                border-radius: 0;
+                padding: 1rem;
+                height: 100vh;      /* На весь экран телефона */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="card">
+        
+        <img src="https://i.pinimg.com/736x/b1/21/13/b12113174c4e7e5af8f77a203e67663d.jpg" alt="Logotipo do Physio Cube" class="project-logo">
+        
+        <h1>Vamos começar</h1>
+
+        <div class="btn-container">
+            <a href="user/register.html" class="btn btn-primary">Registrar</a>
+            <a href="user/login.html" class="btn btn-secondary">Entrar</a>
+        </div>
+
+    </section>
+
+</body>
+</html>

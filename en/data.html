@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Physio Cube – FAQ</title>
+    <link rel="icon" href="https://i.ibb.co/kgKXMwgq/round.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <style>
+        :root{
+            --accent: #0794ae;
+            --bg-body: #f0f2f5;
+            --bg-app: #ffffff;
+            --text-main: #333;
+            --text-light: #666;
+            --border: #e0e0e0;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-body);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: var(--text-main);
+        }
+
+        /* --- Mobile Viewport (App Shell) --- */
+        .mobile-viewport {
+            width: 100%;
+            max-width: 420px;
+            height: 100%;
+            max-height: 900px;
+            background: var(--bg-app);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        @media (max-width: 480px) {
+            body { background: var(--bg-app); }
+            .mobile-viewport { max-width: 100%; max-height: 100%; box-shadow: none; }
+        }
+
+        /* --- Navbar with Back Button --- */
+        .navbar {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            position: relative;
+            justify-content: center;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--accent);
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* --- Scrollable Content --- */
+        .content-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* --- Header Section --- */
+        .faq-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .faq-header img {
+            width: 60px;
+            margin-bottom: 10px;
+        }
+        .faq-header h2 {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        .faq-header p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* --- Accordion Items --- */
+        .faq-item {
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 10px;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            text-align: left;
+            padding: 15px 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .faq-question:hover {
+            color: var(--accent);
+        }
+
+        .arrow {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+            color: #999;
+        }
+
+        /* Open State */
+        .faq-item.active .arrow {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            padding: 0 5px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px; /* Достаточно большое число для раскрытия */
+            padding-bottom: 20px;
+        }
+        
+        /* List styles inside answer */
+        .faq-answer ol {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        .faq-answer li {
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="mobile-viewport">
+        
+        <header class="navbar">
+            <button class="back-btn" onclick="window.location.href='dash.html'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <h1>FAQ</h1>
+        </header>
+
+        <main class="content-scroll">
+
+            <div class="faq-header">
+                <img src="https://i.pinimg.com/736x/b1/21/13/b12113174c4e7e5af8f77a203e67663d.jpg" alt="Icon">
+                <h2>Help Center</h2>
+                <p>Common questions about Physio Cube</p>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Who are we?
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="faq-answer">
+                    We are the Physio Cube team, a new project dedicated to helping you get examined remotely by professional physiotherapists.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How does it work?
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Our project works quite simply in a few steps:
+                    <ol>
+                        <li>Get checked by your family doctor and receive approval for physiotherapy.</li>
+                        <li>Visit your gym (or any facility with our Cube).</li>
+                        <li>Complete the injury survey in the app.</li>
+                        <li>Take the test inside the Cube (strength checks, range of motion, etc.).</li>
+                        <li>Send the data to a physiotherapist and get a response (treatment plan or an in-person referral).</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    How can your service help?
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="faq-answer">
+                    We make life easier. Instead of standing in long queues and paying high costs for minor injury consultations, we provide the same professional service, just faster and more convenient.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Why is it better than competitors?
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="faq-answer">
+                    We officially work with physiotherapists from the Hapoel Be'er Sheva basketball team. Additionally, we study and utilize the most advanced data analysis techniques available.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    Where do you get physiotherapists?
+                    <span class="arrow">▼</span>
+                </button>
+                <div class="faq-answer">
+                    Our physiotherapists are selected via a specialized algorithm. They are professionals who have their own clinics for patients, and our platform serves as a great way for them to earn extra income fully digitally.
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Логика аккордеона
+        const questions = document.querySelectorAll('.faq-question');
+
+        questions.forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                
+                // Если хотим, чтобы при открытии одного, закрывались другие - раскомментируй код ниже:
+                /*
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    if(i !== item) i.classList.remove('active');
+                });
+                */
+
+                // Переключение класса active
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
