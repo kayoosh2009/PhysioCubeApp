@@ -59,7 +59,7 @@
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin-top: -50px;
+      margin-top: -50px;   /* аватар вылезает поверх баннера */
       margin-bottom: 16px;
       min-height: 60px;
     }
@@ -74,6 +74,8 @@
       overflow: hidden;
       flex-shrink: 0;
       box-shadow: 0 4px 18px rgba(27,53,84,0.2);
+      position: relative;   /* ← добавь */
+      z-index: 1;           /* ← добавь */
     }
     .avatar img {
       width: 100%; height: 100%;
@@ -268,14 +270,14 @@
 </div>
 
 <div class="wrap">
+
+  <!-- HEADER: аватар поверх баннера слева, лого справа -->
   <div class="header-row">
     <div class="avatar" id="avatarEl">
-      <!-- Аватарка: положи img/avatar.jpg -->
       <img src="img/001.png" alt="avatar" onerror="this.style.display='none'">
     </div>
     <div class="logo">
-      <!-- Лого: положи img/001.png -->
-      <img src="img/001.png" alt="logo"
+      <img src="img/logo.png" alt="logo"
            onerror="this.outerHTML='<span class=\'logo-fallback\'>◈ MyProfile</span>'">
     </div>
   </div>
