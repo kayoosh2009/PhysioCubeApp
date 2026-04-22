@@ -4,162 +4,279 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
-    <style>
-      :root {
-        --navy:  #1b3554;
-        --blue:  #3f6593;
-        --light: #eef2f7;
-        --white: #f8fafc;
-        --card:  #ffffff;
-        --text:  #1b3554;
-        --muted: #6b849e;
-        --border: rgba(63,101,147,0.15);
-      }
-      * { margin:0; padding:0; box-sizing:border-box; }
-      body { font-family:'DM Sans',sans-serif; background:var(--light); color:var(--text); min-height:100vh; }
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #1b3554;
+      --blue:   #3f6593;
+      --light:  #eef2f7;
+      --white:  #f8fafc;
+      --card:   #ffffff;
+      --text:   #1b3554;
+      --muted:  #6b849e;
+      --border: rgba(63,101,147,0.15);
+    }
 
-      /* BANNER */
-      .banner {
-        width:100%; height:200px;
-        background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
-        position:relative; overflow:hidden;
-      }
-      .banner::after {
-        content:'';
-        position:absolute; inset:0;
-        background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M0 0h40v40H0zm40 40h40v40H40z'/%3E%3C/g%3E%3C/svg%3E");
-      }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
-      /* LAYOUT */
-      .wrap { max-width:620px; margin:0 auto; padding:0 20px 60px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--light);
+      color: var(--text);
+      min-height: 100vh;
+    }
 
-      /* AVATAR */
-      .avatar-row { display:flex; align-items:flex-end; gap:14px; margin-top:-50px; margin-bottom:14px; }
-      .avatar {
-        width:100px; height:100px; border-radius:50%;
-        border:4px solid var(--white);
-        background:var(--blue); overflow:hidden; flex-shrink:0;
-        box-shadow:0 4px 18px rgba(27,53,84,0.2);
-      }
-      .avatar img { width:100%; height:100%; object-fit:cover; }
-      .avatar-initials {
-        width:100%; height:100%; display:flex; align-items:center; justify-content:center;
-        font-family:'DM Serif Display',serif; font-size:30px; color:#f0f4f9;
-      }
+    /* ── BANNER ── */
+    .banner {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .banner img.banner-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute; inset: 0;
+    }
+    .banner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M0 0h40v40H0zm40 40h40v40H40z'/%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
 
-      /* LOGO */
-      .logo {
-        display:flex; align-items:center; gap:8px;
-        margin-bottom:6px;
-      }
-      .logo img { height:28px; width:auto; }
-      .logo-text {
-        font-family:'DM Serif Display',serif;
-        font-size:14px; color:var(--navy);
-        letter-spacing:.3px;
-      }
+    /* ── LAYOUT ── */
+    .wrap {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
 
-      /* NAME */
-      .profile-name {
-        font-family:'DM Serif Display',serif;
-        font-size:26px; color:var(--navy); line-height:1.2; margin-bottom:4px;
-      }
-      .profile-nick {
-        display:flex; align-items:center; gap:5px;
-        font-size:14px; color:var(--muted);
-      }
-      .verify { width:15px; height:15px; flex-shrink:0; }
+    /* ── HEADER ROW: avatar + logo floated right ── */
+    .header-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: -50px;
+      margin-bottom: 16px;
+      min-height: 60px;
+    }
 
-      /* SOCIALS */
-      .social-row { display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
-      .social-btn {
-        display:flex; align-items:center; gap:6px;
-        padding:7px 14px;
-        background:var(--card);
-        border:1px solid var(--border);
-        border-radius:30px;
-        text-decoration:none; color:var(--navy);
-        font-size:13px; font-weight:500;
-        box-shadow:0 1px 4px rgba(27,53,84,0.07);
-        transition:background .18s, transform .15s, box-shadow .18s;
-      }
-      .social-btn:hover {
-        background:var(--blue); color:#fff;
-        border-color:var(--blue);
-        transform:translateY(-1px);
-        box-shadow:0 4px 12px rgba(63,101,147,.28);
-      }
-      .social-btn:hover svg { filter:brightness(10); }
-      .social-btn svg { width:15px; height:15px; }
+    /* ── AVATAR ── */
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 4px solid var(--white);
+      background: var(--blue);
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 4px 18px rgba(27,53,84,0.2);
+    }
+    .avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
 
-      /* DIVIDER */
-      .divider { height:1px; background:var(--border); margin:22px 0; }
+    /* ── LOGO (top-right of header row) ── */
+    .logo {
+      display: flex;
+      align-items: center;
+      align-self: flex-end;
+      margin-bottom: 4px;
+    }
+    .logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+    .logo-fallback {
+      font-family: 'DM Serif Display', serif;
+      font-size: 14px;
+      color: var(--navy);
+      letter-spacing: .3px;
+    }
 
-      /* POST */
-      .post-card {
-        background:var(--card); border-radius:16px;
-        border:1px solid var(--border);
-        overflow:hidden;
-        box-shadow:0 2px 14px rgba(27,53,84,0.06);
-        margin-bottom:20px;
-      }
-      .post-img { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; }
-      .post-img-ph {
-        width:100%; aspect-ratio:16/9; min-height:180px;
-        background:linear-gradient(135deg,#c8daf0,#a8c0dc);
-        display:flex; align-items:center; justify-content:center;
-        color:var(--blue); font-size:13px; opacity:.75;
-      }
-      .post-body { padding:20px 22px 16px; }
-      .post-text { font-size:15px; line-height:1.75; color:var(--text); margin-bottom:16px; }
+    /* ── NAME & NICK ── */
+    .profile-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 5px;
+    }
+    .profile-nick {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .verify {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
 
-      /* STATS */
-      .stats-row {
-        display:flex; align-items:center; gap:12px;
-        padding-top:14px; border-top:1px solid var(--border);
-        flex-wrap:wrap;
-      }
-      .stat-views {
-        display:flex; align-items:center; gap:5px;
-        font-size:13px; color:var(--muted);
-      }
-      .stat-views svg { width:14px; height:14px; }
+    /* ── SOCIALS ── */
+    .social-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      text-decoration: none;
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 1px 4px rgba(27,53,84,0.07);
+      transition: background .18s, transform .15s, box-shadow .18s, color .18s;
+      white-space: nowrap;
+    }
+    .social-btn:hover {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(63,101,147,.28);
+    }
+    .social-btn:hover svg  { filter: brightness(10); }
+    .social-btn:hover img  { filter: brightness(10); }
+    .social-btn svg,
+    .social-btn img.s-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
 
-      /* REACTIONS */
-      .reactions { display:flex; gap:6px; margin-left:auto; flex-wrap:wrap; }
-      .rbtn {
-        display:flex; align-items:center; gap:4px;
-        padding:5px 11px; border-radius:20px;
-        border:1px solid var(--border);
-        background:var(--light);
-        font-size:14px; cursor:pointer;
-        color:var(--navy); font-family:'DM Sans',sans-serif; font-weight:500;
-        transition:all .18s;
-      }
-      .rbtn:hover { background:#dce8f5; border-color:var(--blue); transform:scale(1.06); }
-      .rbtn.active { background:var(--blue); border-color:var(--blue); color:#fff; }
-      .rbtn .cnt { font-size:12px; min-width:14px; }
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 22px 0;
+    }
 
-      .save-msg {
-        font-size:12px; color:var(--muted);
-        text-align:right; min-height:16px; margin-top:6px;
-      }
-      .save-msg.err { color:#b33; }
+    /* ── POST CARD ── */
+    .post-card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 2px 14px rgba(27,53,84,0.06);
+      margin-bottom: 20px;
+    }
+    .post-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+    .post-img-ph {
+      width: 100%;
+      aspect-ratio: 16/9;
+      min-height: 180px;
+      background: linear-gradient(135deg, #c8daf0, #a8c0dc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      font-size: 13px;
+      opacity: .75;
+    }
+    .post-body { padding: 20px 22px 16px; }
+    .post-text {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat-views {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .stat-views svg { width: 14px; height: 14px; }
+
+    /* ── REACTIONS ── */
+    .reactions {
+      display: flex;
+      gap: 6px;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+    .rbtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 11px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--light);
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      transition: all .18s;
+      white-space: nowrap;
+    }
+    .rbtn:hover  { background: #dce8f5; border-color: var(--blue); transform: scale(1.06); }
+    .rbtn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .rbtn .cnt   { font-size: 12px; min-width: 14px; text-align: center; }
+
+    .save-msg {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+      min-height: 16px;
+      margin-top: 6px;
+    }
+    .save-msg.err { color: #b33; }
   </style>
 </head>
 <body>
 
-<div class="banner"></div>
+<!-- BANNER: положи img/banner.jpg чтобы показалась фотография -->
+<div class="banner">
+  <img class="banner-img" src="img/001.png" alt="" onerror="this.style.display='none'">
+</div>
 
 <div class="wrap">
-
-  <!-- AVATAR + LOGO -->
-  <div class="avatar-row">
-    <div class="avatar" id="avatarEl"></div>
+  <div class="header-row">
+    <div class="avatar" id="avatarEl">
+      <!-- Аватарка: положи img/avatar.jpg -->
+      <img src="img/001.png" alt="avatar" onerror="this.style.display='none'">
+    </div>
     <div class="logo">
-      <!-- Замени на свой логотип: <img src="img/logo.png"> -->
-      <span class="logo-text">◈ MyProfile</span>
+      <!-- Лого: положи img/001.png -->
+      <img src="img/001.png" alt="logo"
+           onerror="this.outerHTML='<span class=\'logo-fallback\'>◈ MyProfile</span>'">
     </div>
   </div>
 
@@ -167,17 +284,23 @@
   <div class="profile-name" id="profileName">Имя Фамилия</div>
   <div class="profile-nick">
     <span id="profileNick">@username</span>
-    <img class="verify" src="img/verify.png" alt="✓" onerror="this.style.display='none'">
+    <!-- Verify: положи img/verify.png, или будет SVG-галочка как fallback -->
+    <img class="verify" src="img/verify.png" alt="✓"
+         onerror="this.outerHTML='<svg class=\'verify\' viewBox=\'0 0 24 24\' fill=\'%233f6593\'><path d=\'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z\'/></svg>'">
   </div>
 
   <!-- SOCIALS -->
+  <!-- Иконки берутся из img/logo/linkedin.png и img/logo/github.png -->
+  <!-- Если файла нет — иконка просто не показывается, текст остаётся -->
   <div class="social-row">
     <a class="social-btn" href="https://linkedin.com/in/YOUR" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path fill="#0077b5" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      <img class="s-icon" src="img/linkedin.png" alt=""
+           onerror="this.style.display='none'">
       LinkedIn
     </a>
     <a class="social-btn" href="https://github.com/YOUR" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24"><path fill="#1b3554" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      <img class="s-icon" src="img/github.png" alt=""
+           onerror="this.style.display='none'">
       GitHub
     </a>
   </div>
@@ -186,9 +309,9 @@
 
   <!-- POST -->
   <div class="post-card" id="post-0">
-    <!-- Если есть фото: <img class="post-img" src="img/post1.jpg" alt="post"> -->
-    <!-- Если нет фото — убери строку выше и оставь только post-body -->
-    <div class="post-img-ph">📷 Добавьте фото: &lt;img class="post-img" src="img/post1.jpg"&gt;</div>
+    <!-- Фото поста: положи img/post1.jpg и раскомментируй строку ниже -->
+    <!-- <img class="post-img" src="img/post1.jpg" alt="post"> -->
+    <div class="post-img-ph">📷 Добавьте фото: <code>&lt;img class="post-img" src="img/post1.jpg"&gt;</code></div>
     <div class="post-body">
       <p class="post-text">
         Здесь текст поста. Расскажи о себе, своём проекте или просто поделись мыслью.
@@ -196,7 +319,9 @@
       </p>
       <div class="stats-row">
         <div class="stat-views">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+          </svg>
           <span id="v-0">—</span> просмотров
         </div>
         <div class="reactions">
