@@ -283,7 +283,7 @@
   </div>
 
   <!-- NAME -->
-  <div class="profile-name" id="profileName">Adam Shtrasman</div>
+  <div class="profile-name" id="profileName">Guy Amma</div>
   <div class="profile-nick">
     <span id="profileNick">@unknow</span>
     <!-- Verify: положи img/verify.png, или будет SVG-галочка как fallback -->
@@ -305,7 +305,7 @@
   <div class="divider"></div>
 
   <!-- POST -->
-  <div class="post-card" id="post-3">
+  <div class="post-card" id="post-7">
     <!-- Фото поста: положи img/post1.jpg и раскомментируй строку ниже -->
     <img class="post-img" src="img/" alt="post">
     <div class="post-body">
@@ -317,7 +317,7 @@
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
           </svg>
-          <span id="v-0">—</span> view
+          <span id="v-0">—</span> views
         </div>
         <div class="reactions">
           <button class="rbtn" id="rb-0-like"  onclick="react(0,'like')">👍 <span class="cnt" id="rc-0-like">0</span></button>
@@ -367,7 +367,7 @@
 
   // ─── СЛУШАТЕЛЬ ДАННЫХ (Realtime) ──────────────────
   // Эта функция сама обновит цифры на странице, когда кто-то другой кликнет
-  const postRef = ref(db, 'stats/post-5');
+  const postRef = ref(db, 'stats/post-7');
   onValue(postRef, (snapshot) => {
     updateUI(0, snapshot.val());
   });
@@ -376,7 +376,7 @@
   async function trackView() {
     if (!sessionStorage.getItem('viewed_0')) {
       sessionStorage.setItem('viewed_0', '1');
-      const viewsRef = ref(db, 'stats/post-5/views');
+      const viewsRef = ref(db, 'stats/post-7/views');
       
       // Используем транзакцию, чтобы счетчик не сбивался при одновременных заходах
       runTransaction(viewsRef, (current) => (current || 0) + 1);
