@@ -266,7 +266,7 @@
 
 <!-- BANNER: положи img/banner.jpg чтобы показалась фотография -->
 <div class="banner">
-  <img class="banner-img" src="img/" alt="" onerror="this.style.display='none'">
+  <img class="banner-img" src="img/unknow.png" alt="" onerror="this.style.display='none'">
 </div>
 
 <div class="wrap">
@@ -274,16 +274,16 @@
   <!-- HEADER: аватар поверх баннера слева, лого справа -->
   <div class="header-row">
     <div class="avatar" id="avatarEl">
-      <img src="img/" alt="avatar" onerror="this.style.display='none'">
+      <img src="img/unknow.png" alt="avatar" onerror="this.style.display='none'">
     </div>
     <div class="logo">
-      <img src="img/logo.png" alt="logo"
+      <img src="img/unknow.png" alt="logo"
            onerror="this.outerHTML='<span class=\'logo-fallback\'>◈ MyProfile</span>'">
     </div>
   </div>
 
   <!-- NAME -->
-  <div class="profile-name" id="profileName">Guy Amma</div>
+  <div class="profile-name" id="profileName">unknow</div>
   <div class="profile-nick">
     <span id="profileNick">@unknow</span>
     <!-- Verify: положи img/verify.png, или будет SVG-галочка как fallback -->
@@ -305,19 +305,19 @@
   <div class="divider"></div>
 
   <!-- POST -->
-  <div class="post-card" id="post-7">
+  <div class="post-card" id="post-0">
     <!-- Фото поста: положи img/post1.jpg и раскомментируй строку ниже -->
-    <img class="post-img" src="img/" alt="post">
+    <img class="post-img" src="img/unknow.png" alt="post">
     <div class="post-body">
       <p class="post-text">
-        post text
+        ///
       </p>
       <div class="stats-row">
         <div class="stat-views">
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
           </svg>
-          <span id="v-0">—</span> views
+          <span id="v-0">—</span> view
         </div>
         <div class="reactions">
           <button class="rbtn" id="rb-0-like"  onclick="react(0,'like')">👍 <span class="cnt" id="rc-0-like">0</span></button>
@@ -367,16 +367,16 @@
 
   // ─── СЛУШАТЕЛЬ ДАННЫХ (Realtime) ──────────────────
   // Эта функция сама обновит цифры на странице, когда кто-то другой кликнет
-  const postRef = ref(db, 'stats/post-7');
+  const postRef = ref(db, 'stats/post-4');
   onValue(postRef, (snapshot) => {
     updateUI(0, snapshot.val());
   });
 
   // ─── СЧЕТЧИК ПРОСМОТРОВ ───────────────────────────
   async function trackView() {
-    if (!sessionStorage.getItem('viewed_0')) {
-      sessionStorage.setItem('viewed_0', '1');
-      const viewsRef = ref(db, 'stats/post-7/views');
+    if (!sessionStorage.getItem('viewed_5')) {
+      sessionStorage.setItem('viewed_5', '1');
+      const viewsRef = ref(db, 'stats/post-5/views');
       
       // Используем транзакцию, чтобы счетчик не сбивался при одновременных заходах
       runTransaction(viewsRef, (current) => (current || 0) + 1);
