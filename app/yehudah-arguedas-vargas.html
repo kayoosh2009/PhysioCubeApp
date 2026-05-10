@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:   #1b3554;
+      --blue:   #3f6593;
+      --light:  #eef2f7;
+      --white:  #f8fafc;
+      --card:   #ffffff;
+      --text:   #1b3554;
+      --muted:  #6b849e;
+      --border: rgba(63,101,147,0.15);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--light);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── BANNER ── */
+    .banner {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .banner img.banner-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute; inset: 0;
+    }
+    .banner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M0 0h40v40H0zm40 40h40v40H40z'/%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* ── LAYOUT ── */
+    .wrap {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* ── HEADER ROW: avatar + logo floated right ── */
+    .header-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: -50px;   /* аватар вылезает поверх баннера */
+      margin-bottom: 16px;
+      min-height: 60px;
+    }
+
+    /* ── AVATAR ── */
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 4px solid var(--white);
+      background: var(--blue);
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 4px 18px rgba(27,53,84,0.2);
+      position: relative;   /* ← добавь */
+      z-index: 1;           /* ← добавь */
+    }
+    .avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── LOGO (top-right of header row) ── */
+    .logo {
+      display: flex;
+      align-items: center;
+      align-self: flex-end;
+      margin-bottom: 4px;
+    }
+    .logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+    .logo-fallback {
+      font-family: 'DM Serif Display', serif;
+      font-size: 14px;
+      color: var(--navy);
+      letter-spacing: .3px;
+    }
+
+    /* ── NAME & NICK ── */
+    .profile-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 5px;
+    }
+    .profile-nick {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .verify {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+
+    /* ── SOCIALS ── */
+    .social-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      text-decoration: none;
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 1px 4px rgba(27,53,84,0.07);
+      transition: background .18s, transform .15s, box-shadow .18s, color .18s;
+      white-space: nowrap;
+    }
+    .social-btn:hover {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(63,101,147,.28);
+    }
+    .social-btn:hover svg  { filter: brightness(10); }
+    .social-btn:hover img  { filter: brightness(10); }
+    .social-btn svg,
+    .social-btn img.s-icon {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 22px 0;
+    }
+
+    /* ── POST CARD ── */
+    .post-card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: 0 2px 14px rgba(27,53,84,0.06);
+      margin-bottom: 20px;
+    }
+    .post-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+    }
+    .post-img-ph {
+      width: 100%;
+      aspect-ratio: 16/9;
+      min-height: 180px;
+      background: linear-gradient(135deg, #c8daf0, #a8c0dc);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blue);
+      font-size: 13px;
+      opacity: .75;
+    }
+    .post-body { padding: 20px 22px 16px; }
+    .post-text {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat-views {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .stat-views svg { width: 14px; height: 14px; }
+
+    /* ── REACTIONS ── */
+    .reactions {
+      display: flex;
+      gap: 6px;
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+    .rbtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 11px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--light);
+      font-size: 14px;
+      cursor: pointer;
+      color: var(--navy);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      transition: all .18s;
+      white-space: nowrap;
+    }
+    .rbtn:hover  { background: #dce8f5; border-color: var(--blue); transform: scale(1.06); }
+    .rbtn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .rbtn .cnt   { font-size: 12px; min-width: 14px; text-align: center; }
+
+    .save-msg {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+      min-height: 16px;
+      margin-top: 6px;
+    }
+    .save-msg.err { color: #b33; }
+  </style>
+</head>
+<body>
+
+<!-- BANNER: положи img/banner.jpg чтобы показалась фотография -->
+<div class="banner">
+  <img class="banner-img" src="img/002.png" alt="" onerror="this.style.display='none'">
+</div>
+
+<div class="wrap">
+
+  <!-- HEADER: аватар поверх баннера слева, лого справа -->
+  <div class="header-row">
+    <div class="avatar" id="avatarEl">
+      <img src="img/001.png" alt="avatar" onerror="this.style.display='none'">
+    </div>
+    <div class="logo">
+      <img src="img/logo.png" alt="logo"
+           onerror="this.outerHTML='<span class=\'logo-fallback\'>◈ MyProfile</span>'">
+    </div>
+  </div>
+
+  <!-- NAME -->
+  <div class="profile-name" id="profileName">Sviatoslav Burnashov</div>
+  <div class="profile-nick">
+    <span id="profileNick">@kayoosh_x</span>
+    <!-- Verify: положи img/verify.png, или будет SVG-галочка как fallback -->
+    <img class="verify" src="img/verify.png" alt="✓"
+         onerror="this.outerHTML='<svg class=\'verify\' viewBox=\'0 0 24 24\' fill=\'%233f6593\'><path d=\'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z\'/></svg>'">
+  </div>
+
+  <!-- SOCIALS -->
+  <!-- Иконки берутся из img/logo/linkedin.png и img/logo/github.png -->
+  <!-- Если файла нет — иконка просто не показывается, текст остаётся -->
+  <div class="social-row">
+    <a class="social-btn" href="https://www.linkedin.com/in/sviatoslav-burnashov" target="_blank" rel="noopener">
+      <img class="s-icon" src="img/linkedin.png" alt=""
+           onerror="this.style.display='none'">
+      LinkedIn
+    </a>
+    <a class="social-btn" href="https://github.com/kayoosh2009" target="_blank" rel="noopener">
+      <img class="s-icon" src="img/github.png" alt=""
+           onerror="this.style.display='none'">
+      GitHub
+    </a>
+    <a class="social-btn" href="https://t.me/kayoosh_channel" target="_blank" rel="noopener">
+      <img class="s-icon" src="img/telegram.png" alt=""
+           onerror="this.style.display='none'">
+      Telegram
+    </a>
+    <a class="social-btn" href="https://www.instagram.com/kayoosh_" target="_blank" rel="noopener">
+      <img class="s-icon" src="img/instagram.png" alt=""
+           onerror="this.style.display='none'">
+      Instagram
+    </a>
+    <a class="social-btn" href="https://twitch.tv/kayoosh_x" target="_blank" rel="noopener">
+      <img class="s-icon" src="img/twitch.png" alt=""
+           onerror="this.style.display='none'">
+      Twitch
+    </a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- POST -->
+  <div class="post-card" id="post-0">
+    <!-- Фото поста: положи img/post1.jpg и раскомментируй строку ниже -->
+    <img class="post-img" src="img/003.png" alt="post">
+    <div class="post-body">
+      <p class="post-text">
+        Muhehehe
+      </p>
+      <div class="stats-row">
+        <div class="stat-views">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+          </svg>
+          <span id="v-0">—</span> view
+        </div>
+        <div class="reactions">
+          <button class="rbtn" id="rb-0-like"  onclick="react(0,'like')">👍 <span class="cnt" id="rc-0-like">0</span></button>
+          <button class="rbtn" id="rb-0-fire"  onclick="react(0,'fire')">🔥 <span class="cnt" id="rc-0-fire">0</span></button>
+          <button class="rbtn" id="rb-0-clap"  onclick="react(0,'clap')">👏 <span class="cnt" id="rc-0-clap">0</span></button>
+          <button class="rbtn" id="rb-0-heart" onclick="react(0,'heart')">❤️ <span class="cnt" id="rc-0-heart">0</span></button>
+        </div>
+      </div>
+      <div class="save-msg" id="msg-0"></div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+  // Подключаем Firebase напрямую из CDN
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+  // КОНФИГУРАЦИЯ: Вставь сюда свою ссылку из Firebase
+  const firebaseConfig = {
+    databaseURL: "https://physio-cube-default-rtdb.firebaseio.com/"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+  const used = {}; // Блокировка повторных кликов
+
+  const el = id => document.getElementById(id);
+
+  // ─── ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ────────────────────────
+  function updateUI(postId, data) {
+    if (!data) return;
+    
+    // Обновляем просмотры
+    const viewsEl = el(`v-${postId}`);
+    if (viewsEl) viewsEl.textContent = data.views || 0;
+
+    // Обновляем реакции
+    ['like', 'fire', 'clap', 'heart'].forEach(emoji => {
+      const countEl = el(`rc-${postId}-${emoji}`);
+      if (countEl) {
+        countEl.textContent = (data.reactions && data.reactions[emoji]) || 0;
+      }
+    });
+  }
+
+  // ─── СЛУШАТЕЛЬ ДАННЫХ (Realtime) ──────────────────
+  // Эта функция сама обновит цифры на странице, когда кто-то другой кликнет
+  const postRef = ref(db, 'stats/post-0');
+  onValue(postRef, (snapshot) => {
+    updateUI(0, snapshot.val());
+  });
+
+  // ─── СЧЕТЧИК ПРОСМОТРОВ ───────────────────────────
+  async function trackView() {
+    if (!sessionStorage.getItem('viewed_0')) {
+      sessionStorage.setItem('viewed_0', '1');
+      const viewsRef = ref(db, 'stats/post-0/views');
+      
+      // Используем транзакцию, чтобы счетчик не сбивался при одновременных заходах
+      runTransaction(viewsRef, (current) => (current || 0) + 1);
+    }
+  }
+
+  // ─── ФУНКЦИЯ РЕАКЦИИ ──────────────────────────────
+  window.react = function(postId, emoji) {
+    const key = `${postId}-${emoji}`;
+    if (used[key]) return; // Защита от спама кликами
+    used[key] = true;
+
+    const btn = el(`rb-${postId}-${emoji}`);
+    btn?.classList.add('active');
+
+    const reactionRef = ref(db, `stats/post-${postId}/reactions/${emoji}`);
+    
+    // Атомарное увеличение на +1
+    runTransaction(reactionRef, (current) => (current || 0) + 1)
+      .catch(() => {
+        // Если ошибка — возвращаем кнопку в исходное состояние
+        used[key] = false;
+        btn?.classList.remove('active');
+      });
+  };
+
+  // Запуск
+  trackView();
+</script>
+</body>
+</html>
