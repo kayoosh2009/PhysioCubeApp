@@ -266,7 +266,7 @@
 
 <!-- BANNER: положи img/banner.jpg чтобы показалась фотография -->
 <div class="banner">
-  <img class="banner-img" src="img/" alt="" onerror="this.style.display='none'">
+  <img class="banner-img" src="img/unknow.png" alt="" onerror="this.style.display='none'">
 </div>
 
 <div class="wrap">
@@ -274,7 +274,7 @@
   <!-- HEADER: аватар поверх баннера слева, лого справа -->
   <div class="header-row">
     <div class="avatar" id="avatarEl">
-      <img src="img/" alt="avatar" onerror="this.style.display='none'">
+      <img src="img/unknow.png" alt="avatar" onerror="this.style.display='none'">
     </div>
     <div class="logo">
       <img src="img/logo.png" alt="logo"
@@ -283,7 +283,7 @@
   </div>
 
   <!-- NAME -->
-  <div class="profile-name" id="profileName">Adam Shtrasman</div>
+  <div class="profile-name" id="profileName">Unknow</div>
   <div class="profile-nick">
     <span id="profileNick">@unknow</span>
     <!-- Verify: положи img/verify.png, или будет SVG-галочка как fallback -->
@@ -307,7 +307,7 @@
   <!-- POST -->
   <div class="post-card" id="post-3">
     <!-- Фото поста: положи img/post1.jpg и раскомментируй строку ниже -->
-    <img class="post-img" src="img/" alt="post">
+    <img class="post-img" src="img/unknow.png" alt="post">
     <div class="post-body">
       <p class="post-text">
         post text
@@ -367,7 +367,7 @@
 
   // ─── СЛУШАТЕЛЬ ДАННЫХ (Realtime) ──────────────────
   // Эта функция сама обновит цифры на странице, когда кто-то другой кликнет
-  const postRef = ref(db, 'stats/post-5');
+  const postRef = ref(db, 'stats/post-0');
   onValue(postRef, (snapshot) => {
     updateUI(0, snapshot.val());
   });
@@ -376,7 +376,7 @@
   async function trackView() {
     if (!sessionStorage.getItem('viewed_0')) {
       sessionStorage.setItem('viewed_0', '1');
-      const viewsRef = ref(db, 'stats/post-5/views');
+      const viewsRef = ref(db, 'stats/post-0/views');
       
       // Используем транзакцию, чтобы счетчик не сбивался при одновременных заходах
       runTransaction(viewsRef, (current) => (current || 0) + 1);
