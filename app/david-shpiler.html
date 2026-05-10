@@ -367,7 +367,7 @@
 
   // ─── СЛУШАТЕЛЬ ДАННЫХ (Realtime) ──────────────────
   // Эта функция сама обновит цифры на странице, когда кто-то другой кликнет
-  const postRef = ref(db, 'stats/post-4');
+  const postRef = ref(db, 'stats/post-5');
   onValue(postRef, (snapshot) => {
     updateUI(0, snapshot.val());
   });

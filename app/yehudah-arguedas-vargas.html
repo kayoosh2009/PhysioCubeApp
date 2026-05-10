@@ -374,9 +374,9 @@
 
   // ─── СЧЕТЧИК ПРОСМОТРОВ ───────────────────────────
   async function trackView() {
-    if (!sessionStorage.getItem('viewed_5')) {
-      sessionStorage.setItem('viewed_5', '1');
-      const viewsRef = ref(db, 'stats/post-5/views');
+    if (!sessionStorage.getItem('viewed_19')) {
+      sessionStorage.setItem('viewed_19', '1');
+      const viewsRef = ref(db, 'stats/post-19/views');
       
       // Используем транзакцию, чтобы счетчик не сбивался при одновременных заходах
       runTransaction(viewsRef, (current) => (current || 0) + 1);
