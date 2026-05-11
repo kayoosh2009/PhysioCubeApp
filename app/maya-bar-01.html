@@ -367,16 +367,16 @@
 
   // ─── СЛУШАТЕЛЬ ДАННЫХ (Realtime) ──────────────────
   // Эта функция сама обновит цифры на странице, когда кто-то другой кликнет
-  const postRef = ref(db, 'stats/post-11');
+  const postRef = ref(db, 'stats/post-0');
   onValue(postRef, (snapshot) => {
     updateUI(0, snapshot.val());
   });
 
   // ─── СЧЕТЧИК ПРОСМОТРОВ ───────────────────────────
   async function trackView() {
-    if (!sessionStorage.getItem('viewed_11')) {
-      sessionStorage.setItem('viewed_11', '1');
-      const viewsRef = ref(db, 'stats/post-11/views');
+    if (!sessionStorage.getItem('viewed_0')) {
+      sessionStorage.setItem('viewed_0', '1');
+      const viewsRef = ref(db, 'stats/post-0/views');
       
       // Используем транзакцию, чтобы счетчик не сбивался при одновременных заходах
       runTransaction(viewsRef, (current) => (current || 0) + 1);
