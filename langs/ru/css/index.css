@@ -15,6 +15,11 @@
     --radius: 16px;
 }
 
+.feature-icon img {
+    width: 25%;
+    height: 25%;
+}
+
 * {
     margin: 0;
     padding: 0;
