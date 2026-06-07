@@ -1,6 +1,6 @@
 /* --------------------- Общий стиль (тот же, что у вас) --------------------- */
 :root {
-    --accent: #0794ae;
+    --accent: #1b3554;
     --white: #ffffff;
     --bg-body: #f4f6f8;
     --text: #333333;
@@ -96,7 +96,7 @@ h2 {
 }
 
 .forgot-pass-link a:hover {
-    color: #056e93;
+    color: #1b3554;
     text-decoration: underline;
 }
 
@@ -119,7 +119,7 @@ h2 {
 }
 
 .btn-primary:hover {
-    background: #056e93;
+    background: #1b3554;
     transform: translateY(-1px);
 }
 
