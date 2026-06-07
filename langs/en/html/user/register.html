@@ -5,6 +5,7 @@
     <title>Physio Cube – Register</title>
     <link rel="icon" href="https://i.ibb.co/kgKXMwgq/round.png" type="image/x-icon">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="../../css/register.css">
 </head>
 <body>
@@ -16,53 +17,41 @@
 
         <form id="registerForm">
             <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" required autocomplete="email" placeholder="you@example.com">
+                <label>Email</label>
+                <input type="email" id="email" required>
             </div>
-
             <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" required autocomplete="new-password" placeholder="•••••••• (Min 6 chars)">
+                <label>Password</label>
+                <input type="password" id="password" required>
             </div>
-
             <div class="input-group">
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" required autocomplete="given-name" placeholder="John">
+                <label>First Name</label>
+                <input type="text" id="firstName" required>
             </div>
-
             <div class="input-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" required autocomplete="family-name" placeholder="Doe">
+                <label>Last Name</label>
+                <input type="text" id="lastName" required>
             </div>
-
             <div class="input-group">
-                <label for="userId">Personal ID</label>
-                <input type="number" id="userId" required placeholder="e.g. 12345678">
+                <label>Personal ID</label>
+                <input type="text" id="personalId">
             </div>
-
             <div class="input-group">
-                <label for="gender">Gender</label>
-                <select id="gender" required>
+                <label>Gender</label>
+                <select id="gender">
                     <option value="">Select gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
                 </select>
             </div>
-
             <div class="input-group">
-                <label for="sport">Sport</label>
-                <input type="text" id="sport" placeholder="e.g. Swimming">
+                <label>Sport</label>
+                <input type="text" id="sport">
             </div>
-
             <div class="input-group">
-                <label for="medicalCard">Medical Card</label>
-                <input type="text" id="medicalCard" placeholder="Card number">
-            </div>
-
-            <div class="input-group">
-                <label for="hospital">Hospital</label>
-                <select id="hospital" required>
+                <label>Medical Card (Hospital)</label>
+                <select id="hospital">
                     <option value="">Select hospital</option>
                     <option value="Clalit">Clalit</option>
                     <option value="Macabi">Macabi</option>
@@ -70,6 +59,8 @@
                     <option value="Leumit">Leumit</option>
                 </select>
             </div>
+
+            <button type="submit" class="btn btn-primary">Register</button>
 
             <button type="submit" class="btn btn-primary" id="submitBtn">Register</button>
         </form>
