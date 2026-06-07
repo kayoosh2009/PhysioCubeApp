@@ -1,0 +1,148 @@
+:root {
+    --accent: #0794ae;
+    --white: #ffffff;
+    --bg-body: #f4f6f8;
+    --text: #333;
+    --text-light: #666;
+    --border: #e0e0e0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-body);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
+}
+
+.card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Логотип */
+.project-logo {
+    max-width: 100px;
+    margin: 0 auto 1rem;
+    display: block;
+    border-radius: 50%;
+    /* Опционально: делает лого круглым, если нужно */
+}
+
+h2 {
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 0.7rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fafafa;
+    transition: border-color .2s;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: #fff;
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    margin-top: 1rem;
+    transition: all .2s;
+}
+
+.btn-primary {
+    color: var(--white);
+    background: var(--accent);
+}
+
+.btn-primary:hover {
+    background: #056e93;
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.extra-links {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    text-decoration: none;
+    padding: 0.7rem;
+    display: block;
+    border-radius: 8px;
+}
+
+.btn-secondary:hover {
+    background: #f0f8fb;
+}
+
+@media (max-width:480px) {
+    body {
+        background: var(--white);
+    }
+
+    .card {
+        border: none;
+        box-shadow: none;
+        padding: 2rem 1rem;
+        min-height: 100vh;
+        justify-content: start;
+    }
+}
