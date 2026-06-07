@@ -10,7 +10,7 @@
 <body>
 
     <section class="card">
-        <img src="https://i.pinimg.com/736x/b1/21/13/b12113174c4e7e5af8f77a203e67663d.jpg" alt="Physio Cube logo" class="project-logo">
+        <img src="../../../../img/logo.png" alt="Physio Cube logo" class="project-logo">
 
         <h2>Create Account</h2>
 
@@ -80,73 +80,6 @@
         </div>
     </section>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyB8DZm6yDyGHD9rWo-bIhsipsKeMXCTcBk",
-            authDomain: "physio-cube.firebaseapp.com",
-            projectId: "physio-cube",
-            storageBucket: "physio-cube.firebasestorage.app",
-            messagingSenderId: "593288932552",
-            appId: "1:593288932552:web:3b4783b6c16fef9eae09fd",
-            measurementId: "G-F5W17MVEZD"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-
-        const registerForm = document.getElementById('registerForm');
-        const submitBtn = document.getElementById('submitBtn');
-
-        registerForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Creating account...';
-
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            
-            // Данные профиля (БЕЗ пароля - для безопасности)
-            const profileData = {
-                firstName: document.getElementById('firstName').value.trim(),
-                lastName: document.getElementById('lastName').value.trim(),
-                personalId: document.getElementById('userId').value.trim(),
-                gender: document.getElementById('gender').value,
-                sport: document.getElementById('sport').value.trim() || "None",
-                medicalCard: document.getElementById('medicalCard').value.trim() || "None",
-                hospital: document.getElementById('hospital').value,
-                email: email, 
-                createdAt: new Date().toISOString()
-            };
-
-            try {
-                // 1. Создаем пользователя в Auth
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                const user = userCredential.user;
-
-                // 2. Создаем документ в Firestore с UID пользователя
-                await setDoc(doc(db, "users", user.uid), profileData);
-
-                alert("Registration successful! Redirecting to Login...");
-                window.location.href = "login.html";
-
-            } catch (error) {
-                console.error("Register Error:", error);
-                let message = "Registration failed: " + error.message;
-                
-                if (error.code === 'auth/email-already-in-use') message = "This email is already registered.";
-                if (error.code === 'auth/weak-password') message = "Password must be at least 6 characters.";
-                if (error.code === 'permission-denied') message = "Database write permission denied. Check Firebase Rules.";
-
-                alert(message);
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Register';
-            }
-        });
-    </script>
+    <script src="../../js/register.js" defer></script>
 </body>
 </html>

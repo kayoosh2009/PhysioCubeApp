@@ -1,5 +1,5 @@
 :root {
-    --accent: #0794ae;
+    --accent: #1b3554;
     --white: #ffffff;
     --bg-body: #f4f6f8;
     --text: #333;
@@ -103,7 +103,7 @@ h2 {
 }
 
 .btn-primary:hover {
-    background: #056e93;
+    background: #1b3554;
 }
 
 .btn-primary:disabled {
@@ -145,4 +145,21 @@ h2 {
         min-height: 100vh;
         justify-content: start;
     }
+}
+
+#message {
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.error {
+    background: #f8d7da;
+    color: #721c24;
 }
